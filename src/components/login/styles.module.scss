@@ -1,0 +1,80 @@
+.main{
+
+}
+.loginBoxMain{
+    color:#132135;
+    background: white;
+    border-radius: 1rem;
+    width: 26rem;
+    /* height: 38rem; */
+    margin: auto;
+    margin-top: 5%;
+    font-family: 'Roboto', sans-serif;
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    transition: .5s;
+    
+     h2{
+        font-family: 'Roboto', sans-serif;
+        font-weight: 800;
+        font-size: 2rem;
+    }
+    
+     a{
+        color: #0071F9;
+        text-decoration: underline;
+        cursor: pointer;
+        /* font-family: 'Roboto', sans-serif; */
+        font-weight: 300;
+    }
+    
+     .two-item-form{
+        display: flex;
+        gap: 25px;
+    }
+    
+    .login-form-input{
+        display: flex;
+        flex-direction: column;
+    }
+    input{
+        height: 3rem;
+        aspect-ratio: 4;
+        border: none;
+        background: #F9F8F9;
+        border-radius: 10rem;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        margin: 5px;
+        width: 100%;
+        padding-left: 1rem;
+    }
+    .login-form-input input:focus{
+        outline: 3px solid #0071F9;
+    }
+    .login-form-input.sign-up{
+        display: none;
+    }
+    .sign-up .login-form-input.sign-up{
+        display: flex !important;
+    }
+    .login-form-input .login-label{
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        font-size: .9rem;
+    }
+     .continue-button{
+        height: 3rem;
+        aspect-ratio: 4;
+        border-radius: 10rem;
+        border:none;
+        cursor: pointer;
+        color:white;
+        background:#0071F9;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        font-size: 1.4rem;
+    }
+}
