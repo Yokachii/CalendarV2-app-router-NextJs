@@ -6,31 +6,10 @@ import styles from './page.module.css'
 import { NextPageContext } from 'next'
 import { useEffect } from 'react'
 import { cookies } from 'next/headers';
+
 import { useCookies } from 'react-cookie';
 
 import { headers } from 'next/headers'
-// import { useState } from 'react';
-
-// const loginAccount = async (token) => {
-//   const response = await fetch('http://localhost:3000/api/user/auth', {
-//       method: 'POST',
-//       headers: {
-//       'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({token}), // Send message in request body
-//   });
-  
-//   let data = await response.json();
-//   return data
-// }
-
-// Home.getInitialProps = async (ctx: NextPageContext) => {
-//   const data = ctx.res.getHeader('user-token');
-//   ctx.res.removeHeader('user-token');
-
-//   return {data:await loginAccount(data)}
-// }
-
 
 export default async function Home({}) {
   
@@ -49,13 +28,15 @@ export default async function Home({}) {
 
     
     
-    const res = await fetch("http://localhost:3000/api/auth", {
-      method: "POST",
-      body: JSON.stringify({token:tok?.value}),
+    const res = await fetch("http://localhost:3000/api/user/cookiestest", {
+      method: "GET",
     });
-    // const json = await res.json();
+    
     const status = res.status
     console.log(status)
+    // const json = await res.json();
+    // console.log(status)
+
   };
 
   getTestApi()
