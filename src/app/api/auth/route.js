@@ -7,8 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     const body = await request.json();
-    let tokenJson = body.token
-    let token = tokenJson.value
+    let token = body.token
     
 
     let response = NextResponse.json({

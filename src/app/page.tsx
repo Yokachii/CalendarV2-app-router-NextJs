@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import { NextPageContext } from 'next'
 import { useEffect } from 'react'
 import { cookies } from 'next/headers'
+import { headers } from 'next/headers'
 // import { useState } from 'react';
 
 // const loginAccount = async (token) => {
@@ -31,41 +32,32 @@ export default function Home({}) {
   
   const cookieStore = cookies()
   const tok = cookieStore.get('token')
-  const tok2 = cookieStore.get('user-token')
+
+  const headersList = headers()
+  const userAcc = headersList.get('user-account')
+  let userAccountJson
+
+  if(userAcc){
+    userAccountJson=JSON.parse(userAcc)
+  }
 
   const getTestApi = async () => {
     let token = tok
     
-    // const response = await fetch('http://localhost:3000/api/auth', {
-    //     method: 'POST',
-    //     headers: {
-    //     'Content-Type': 'application/json',
-    //     },
-    //     body:JSON.stringify({token})
+    // const res = await fetch("http://localhost:3000/api/auth", {
+    //   method: "POST",
+    //   body: JSON.stringify({token:token?.value}),
     // });
-
-    
-    // // let status = response.status.toString()
-    // let json = await response.json();
-    // console.log(response.status,json)
-    const res = await fetch("http://localhost:3000/api/auth", {
-      method: "POST",
-      body: JSON.stringify({token}),
-    });
-    const json = await res.json();
-    const status = res.status
-    console.log(json,status)
+    // const json = await res.json();
+    // const status = res.status
   };
 
   getTestApi()
-  
-  
-
-  console.log(tok,tok2)
 
   return (
     <main className={styles.main} style={{height:"150vh"}}>
       <p>2</p>
+      <p>{userAccountJson.email}</p>
       {/* <p>name : {data.user.firstname}</p>
       <p>mail : {data.user.email}</p>
       <p>request state : {data2}</p> */}
