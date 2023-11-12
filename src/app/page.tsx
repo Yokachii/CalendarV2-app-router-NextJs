@@ -1,95 +1,64 @@
+
 import Image from 'next/image'
+import '../style/global.css'
 import styles from './page.module.css'
+import { NextPageContext } from 'next'
+// import { useState } from 'react';
 
-export default function Home() {
+// const loginAccount = async (token) => {
+//   const response = await fetch('http://localhost:3000/api/user/auth', {
+//       method: 'POST',
+//       headers: {
+//       'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({token}), // Send message in request body
+//   });
+  
+//   let data = await response.json();
+//   return data
+// }
+
+// Home.getInitialProps = async (ctx: NextPageContext) => {
+//   const data = ctx.res.getHeader('user-token');
+//   ctx.res.removeHeader('user-token');
+
+//   return {data:await loginAccount(data)}
+// }
+
+export default function Home({}) {
+
+  // const [data2,setData2] = useState('')
+
+  // const getTestApi = async () => {
+  //   let tmpData = await fetchApi('api/user/test','GET')
+  //   console.log(tmpData)
+  //   setData2(tmpData.status)
+
+  //   // let tmpData2 = await fetchApi('api/user/auth','GET')
+  //   // const response = await fetch('http://localhost:3000/api/user/test', {
+  //   //     method: 'GET',
+  //   //     headers: {
+  //   //     'Content-Type': 'application/json',
+  //   //     },
+  //   // });
+    
+  //   // let json = await response.json();
+  //   // let status = response.status.toString()
+  //   // setData2(status)
+  //   // console.log(status,json)
+  // };
+
+  // getTestApi()
+
+  // console.log(data)
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main className={styles.main} style={{height:"150vh"}}>
+      <p>2</p>
+      {/* <p>name : {data.user.firstname}</p>
+      <p>mail : {data.user.email}</p>
+      <p>request state : {data2}</p> */}
+      {/* <p>{test}</p> */}
     </main>
   )
 }
