@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sequelize/core": "^7.0.0-alpha.29",
+    "mysql2": "^3.6.3",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest"
+    "sequelize": "^6.34.0"
   },
   "devDependencies": {
-    "typescript": "latest",
-    "@types/react": "latest",
     "@types/node": "latest",
-    "@types/react-dom": "latest"
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
   }
 }
