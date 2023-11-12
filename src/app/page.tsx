@@ -3,6 +3,8 @@ import Image from 'next/image'
 import '../style/global.css'
 import styles from './page.module.css'
 import { NextPageContext } from 'next'
+import { useEffect } from 'react'
+import { cookies } from 'next/headers'
 // import { useState } from 'react';
 
 // const loginAccount = async (token) => {
@@ -29,28 +31,30 @@ export default function Home({}) {
 
   // const [data2,setData2] = useState('')
 
-  // const getTestApi = async () => {
-  //   let tmpData = await fetchApi('api/user/test','GET')
-  //   console.log(tmpData)
-  //   setData2(tmpData.status)
-
-  //   // let tmpData2 = await fetchApi('api/user/auth','GET')
-  //   // const response = await fetch('http://localhost:3000/api/user/test', {
-  //   //     method: 'GET',
-  //   //     headers: {
-  //   //     'Content-Type': 'application/json',
-  //   //     },
-  //   // });
+  const getTestApi = async () => {
+    let token = 1
     
-  //   // let json = await response.json();
-  //   // let status = response.status.toString()
-  //   // setData2(status)
-  //   // console.log(status,json)
-  // };
+    const response = await fetch('http://localhost:3000/api/auth', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({token})
+    });
 
-  // getTestApi()
+    
+    // let json = await response.json();
+    // let status = response.status.toString()
+    console.log(response.status)
+  };
 
-  // console.log(data)
+  getTestApi()
+  
+  const cookieStore = cookies()
+  const tok = cookieStore.get('token')
+  const tok2 = cookieStore.get('user-token')
+
+  console.log(tok,tok2)
 
   return (
     <main className={styles.main} style={{height:"150vh"}}>
