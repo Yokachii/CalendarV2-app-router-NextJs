@@ -6,28 +6,42 @@ import { sql } from '@sequelize/core';
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const body = await request.json();
+    const body = await request.json();
+    let tokenJson = body.token
+    let token = tokenJson.value
+    
 
-  // Make that below if condition as your own backend api call to validate user
-  if (body.token==1) {
+    let response = NextResponse.json({
+        status:'error',
+        error:'server error, please retry later'
+    },{ status: 500 })
 
-    const response = NextResponse.json(
-        {
-            a:"b"
-        },
-        { status: 200 }
-    )
+    // let sql = `SELECT * FROM users WHERE id = '${token}'`
+    let sql = `SELECT * FROM users WHERE id = '${token}'`
 
-    // response.cookies.set({
-    //     name: 'user-token',
-    //     value: 'B',
-    //     httpOnly: true,
-    //     maxAge: 60 * 60 * 24 * 7,
-    // })
+    await sequelize.query(sql, {type:sequelize.QueryTypes.SELECT}).then(x=>{
+        
+        let user = x[0]
 
-    return response;
+        if(user&&user.id){
 
-  }
+            response = NextResponse.json({
+                status:'succes',
+                user:user,
+            },{ status: 200 })
 
-  return NextResponse.json({ success: false });
+            return response
+        }else{
+
+            response = NextResponse.json({
+                status:'error',
+                error:'account not found'
+            },{ status: 400 })
+            
+            return response
+        }
+        
+    })
+
+    return response
 }

@@ -69,7 +69,7 @@ const User = sequelize.define('users', {
 
 (async () => {
     await User.sync({});
-    console.log('Les table ont été chargée !');
+    console.log('La table "user" a été charger');
 })();
 
 module.exports = User;
