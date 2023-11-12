@@ -10,16 +10,21 @@
   },
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.29",
+    "cookie": "^0.6.0",
+    "cookies-next": "^4.0.0",
     "mysql2": "^3.6.3",
     "next": "latest",
     "react": "latest",
+    "react-cookie": "^6.1.1",
     "react-dom": "latest",
+    "sass": "^1.69.5",
     "sequelize": "^6.34.0"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "sass": "^1.69.5",
     "typescript": "latest"
   }
 }
