@@ -38,37 +38,6 @@ export default function Index({}) {
         }
     }
 
-    // function displayLoginError(error) {
-    //     setLoginError(error)
-    // }
-
-    // async function LoginRegister(){
-    //     displayLoginError('')
-    //     switch (loginTextContentH2) {
-    //         case 'Log in': // login the user
-    //             if(!eMail||!password) return displayLoginError(`Please fill all the field`)
-                
-    //             let getUser = await checkIfUserExist() // Check if the user exist
-    //             if(!getUser.isExsite) return displayLoginError(`Account does not exist`)
-                
-    //             loginAccount()
-    //             break;
-    //         case 'Sign up': // register the user
-    //             if(!firstName||!lastName||!eMail||!password) return displayLoginError(`Please fill all the field`) // Check if the field are fill
-
-    //             let checkUser = await checkIfUserExist() // Check if the mail is allready taken
-    //             if(checkUser.isExsite) return displayLoginError(`This e-mail is allready taken, please try to use another email`)
-
-    //             if(password===confirmPassword){ // Check if password match
-    //                 createAccount() // Register
-    //             }else{
-    //                 displayLoginError('Password don\'t match, please check the password') // Error
-    //             }
-    //             break;
-    //     }
-    // }
-
-
     useEffect(() => {
         switchLoginSign() // initialasing the swithLoginButton
     }, []);
@@ -88,7 +57,7 @@ export default function Index({}) {
                 <div className="login-form-input"> <div className={`${styles[`login-label`]}`}>Password</div> <input placeholder='********' onChange={e=>{setPassword(e.currentTarget.value)}} value={password}></input> </div>
                 <div className={`${styles[`login-form-input`]} ${styles[`sign-up`]}`}> <div className={`${styles[`login-label`]}`}>Confirm password</div> <input placeholder='********' onChange={e=>{setConfirmPassword(e.currentTarget.value)}} value={confirmPassword}></input> </div>
                 <a>Forgot password</a>
-                <button className={`${styles[`continue-button`]}`} onClick={()=>{LoginRegister()}}>Continue</button>
+                <button className={`${styles[`continue-button`]}`} onClick={()=>{}}>Continue</button>
             </div>
         </div>
     )

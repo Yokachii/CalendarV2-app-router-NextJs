@@ -118,54 +118,54 @@ export default function Home() {
     //     console.log(datass)
     // };
 
-    // const loginAccount = async () => {
-    //     const response = await fetch('http://localhost:3000/api/user/login', {
-    //         method: 'POST',
-    //         headers: {
-    //         'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ 
-    //             email:eMail,
-    //             password:password,
-    //         }), // Envoyer le message dans le corps de la requête
-    //     });
+    const loginAccount = async () => {
+        const response = await fetch('http://localhost:3000/api/user/login', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                email:eMail,
+                password:password,
+            }), // Envoyer le message dans le corps de la requête
+        });
         
-    //     const datass = await response.json();
-    //     console.log(datass)
-    // }
+        const datass = await response.json();
+        console.log(datass)
+    }
 
-    // const createAccount = async () => {
-    //     const response = await fetch('http://localhost:3000/api/user/createaccount', {
-    //         method: 'POST',
-    //         headers: {
-    //         'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ 
-    //             firstname:firstName,
-    //             lastname:lastName,
-    //             email:eMail,
-    //             password:password,
-    //         }), // Envoyer le message dans le corps de la requête
-    //     });
+    const createAccount = async () => {
+        const response = await fetch('http://localhost:3000/api/user/createaccount', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                firstname:firstName,
+                lastname:lastName,
+                email:eMail,
+                password:password,
+            }), // Envoyer le message dans le corps de la requête
+        });
         
-    //     const datass = await response.json();
-    //     console.log(datass)
-    // };
+        const datass = await response.json();
+        console.log(datass)
+    };
 
-    // const checkIfUserExist = async () => {
-    //     const response = await fetch('http://localhost:3000/api/user/checkifuser', {
-    //         method: 'POST',
-    //         headers: {
-    //         'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ 
-    //             email:eMail,
-    //         }), // Envoyer le message dans le corps de la requête
-    //     });
+    const checkIfUserExist = async () => {
+        const response = await fetch('http://localhost:3000/api/user/checkifuser', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                email:eMail,
+            }), // Envoyer le message dans le corps de la requête
+        });
         
-    //     const datass = await response.json();
-    //     return datass
-    // };
+        const datass = await response.json();
+        return datass
+    };
 
 
     
@@ -198,36 +198,35 @@ export default function Home() {
         }
     }
 
-    // function displayLoginError(err) {
-    //     setLoginError(err)
-    // }
+    function displayLoginError(err : string) {
+        setLoginError(err)
+    }
 
-    // async function LoginRegister(){
-    //     displayLoginError('')
-    //     switch (loginTextContentH2) {
-    //         case 'Log in': // login the user
-    //             if(!eMail||!password) return displayLoginError(`Please fill all the field`)
+    async function LoginRegister(){
+        displayLoginError('')
+        switch (loginTextContentH2) {
+            case 'Log in': // login the user
+                if(!eMail||!password) return displayLoginError(`Please fill all the field`)
                 
-    //             let getUser = await checkIfUserExist() // Check if the user exist
-    //             if(!getUser.isExsite) return displayLoginError(`Account does not exist`)
+                let getUser = await checkIfUserExist() // Check if the user exist
+                if(!getUser.isExsite) return displayLoginError(`Account does not exist`)
                 
-    //             loginAccount()
-    //             break;
-    //         case 'Sign up': // register the user
-    //             if(!firstName||!lastName||!eMail||!password) return displayLoginError(`Please fill all the field`) // Check if the field are fill
+                loginAccount()
+                break;
+            case 'Sign up': // register the user
+                if(!firstName||!lastName||!eMail||!password) return displayLoginError(`Please fill all the field`) // Check if the field are fill
 
-    //             let checkUser = await checkIfUserExist() // Check if the mail is allready taken
-    //             if(checkUser.isExsite) return displayLoginError(`This e-mail is allready taken, please try to use another email`)
+                let checkUser = await checkIfUserExist() // Check if the mail is allready taken
+                if(checkUser.isExsite) return displayLoginError(`This e-mail is allready taken, please try to use another email`)
 
-    //             if(password===confirmPassword){ // Check if password match
-    //                 createAccount() // Register
-    //             }else{
-    //                 displayLoginError('Password don\'t match, please check the password') // Error
-    //             }
-    //             break;
-    //     }
-    // }
-
+                if(password===confirmPassword){ // Check if password match
+                    createAccount() // Register
+                }else{
+                    displayLoginError('Password don\'t match, please check the password') // Error
+                }
+                break;
+        }
+    }
 
     // useEffect(() => {
     //     switchLoginSign() // initialasing the swithLoginButton

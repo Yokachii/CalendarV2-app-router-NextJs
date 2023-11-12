@@ -1,10 +1,13 @@
+'use server';
 
 import Image from 'next/image'
 import '../style/global.css'
 import styles from './page.module.css'
 import { NextPageContext } from 'next'
 import { useEffect } from 'react'
-import { cookies } from 'next/headers'
+import { cookies } from 'next/headers';
+import { useCookies } from 'react-cookie';
+
 import { headers } from 'next/headers'
 // import { useState } from 'react';
 
@@ -28,7 +31,8 @@ import { headers } from 'next/headers'
 //   return {data:await loginAccount(data)}
 // }
 
-export default function Home({}) {
+
+export default async function Home({}) {
   
   const cookieStore = cookies()
   const tok = cookieStore.get('token')
@@ -42,14 +46,16 @@ export default function Home({}) {
   }
 
   const getTestApi = async () => {
-    let token = tok
+
     
-    // const res = await fetch("http://localhost:3000/api/auth", {
-    //   method: "POST",
-    //   body: JSON.stringify({token:token?.value}),
-    // });
+    
+    const res = await fetch("http://localhost:3000/api/auth", {
+      method: "POST",
+      body: JSON.stringify({token:tok?.value}),
+    });
     // const json = await res.json();
-    // const status = res.status
+    const status = res.status
+    console.log(status)
   };
 
   getTestApi()
