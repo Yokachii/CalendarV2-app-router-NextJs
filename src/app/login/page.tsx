@@ -252,7 +252,7 @@ export default function Home() {
             </div>
 
             <div className={`${styles[`right`]}`}>
-                <LoginBox></LoginBox>
+            {/* <LoginBox firstName={firstName} lastName={lastName} eMail={eMail} password={password} confirmPassword={confirmPassword} setFirstName={setFirstName} setLastName={setLastName} setEMail={setEMail} setPassword={setPassword} setConfirmPassword={setConfirmPassword}></LoginBox> */}
             </div>
 
             </div>

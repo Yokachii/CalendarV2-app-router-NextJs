@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.29",
+    "@vercel/postgres": "^0.5.1",
     "cookie": "^0.6.0",
     "cookies-next": "^4.0.0",
     "js-cookie": "^3.0.5",
@@ -18,9 +19,11 @@
     "next-cookies": "^2.0.3",
     "react": "latest",
     "react-cookie": "^6.1.1",
-    "react-dom": "latest",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.48.2",
     "sass": "^1.69.5",
-    "sequelize": "^6.34.0"
+    "sequelize": "^6.34.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "latest",

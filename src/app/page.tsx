@@ -28,8 +28,8 @@ export default async function Home({}) {
 
   const getTestApi = async () => {
 
-    let data = await create()
-    console.log(data)
+    // let data = await create()
+    // console.log(data)
     
     // const res = await fetch("http://localhost:3000/api/user/cookiestest", {
     //   method: "GET",
@@ -53,6 +53,9 @@ export default async function Home({}) {
       <p>mail : {data.user.email}</p>
       <p>request state : {data2}</p> */}
       {/* <p>{test}</p> */}
+      {/* <form action={create}>
+        <button type="submit">Submit</button>
+      </form> */}
     </main>
   )
 }
