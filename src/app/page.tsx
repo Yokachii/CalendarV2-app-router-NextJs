@@ -11,11 +11,13 @@ import { useCookies } from 'react-cookie';
 
 import { headers } from 'next/headers'
 
+import { create } from '../utils/action'
+
 export default async function Home({}) {
+  
   
   const cookieStore = cookies()
   const tok = cookieStore.get('token')
-
   const headersList = headers()
   const userAcc = headersList.get('user-account')
   let userAccountJson
@@ -26,15 +28,17 @@ export default async function Home({}) {
 
   const getTestApi = async () => {
 
+    let data = await create()
+    console.log(data)
     
+    // const res = await fetch("http://localhost:3000/api/user/cookiestest", {
+    //   method: "GET",
+    // });
     
-    const res = await fetch("http://localhost:3000/api/user/cookiestest", {
-      method: "GET",
-    });
-    
-    const status = res.status
-    console.log(status)
+    // const status = res.status
     // const json = await res.json();
+    // console.log(status,json)
+
     // console.log(status)
 
   };
