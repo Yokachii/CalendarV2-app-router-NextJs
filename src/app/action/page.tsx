@@ -1,22 +1,33 @@
-'use server';
- 
-import { cookies } from 'next/headers'
- 
-async function create() {
-  const oneDay = 24 * 60 * 60 * 1000
-  cookies().set('name', 'value', { expires: Date.now() - oneDay })
-}
+"use client"
 
-export default async function Home() {
+import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
+import {envoyerFormulaire} from '@/utils/action'
 
-    // create()
-    
-    
-    return (
-        <div>
-            
-            <p>ABC</p>
+type FormData = {
+  nom: string;
+  // Ajoutez d'autres champs selon vos besoins
+};
 
-        </div>
-    )
+export default function MonFormulaire() {
+  const { register, handleSubmit, control } = useForm<FormData>();
+  const { errors } = useFormState({ control });
+
+  const onSubmit: SubmitHandler<FormData> = async (data:any) => {
+    // Appelez votre action.ts ou effectuez toute logique de traitement ici
+    await envoyerFormulaire(data)
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <label>
+        Nom:
+        <input {...register('nom', { required: 'Ce champ est requis' })} />
+      </label>
+
+      {errors.nom && <p>{errors.nom.message}</p>}
+
+      <button type="submit">Envoyer</button>
+    </form>
+  );
 }
