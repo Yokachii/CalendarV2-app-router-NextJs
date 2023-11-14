@@ -119,28 +119,32 @@ async function registerAction(data:FormData2){
 
   console.log(isUser,data.email)
 
-  if(isUser) return `cette email a déja un compte`
+  if(isUser) return { status:303,error:`cette email a déja un compte`,message:"" }
 
-  await User.create({
-    firstname:data.firstname,
-    lastname:data.lastname,
-    email:data.email,
-    password:data.password,
-    activities:JSON.stringify([]),
-    dailytask:JSON.stringify([]),
-    dashboardwidget:JSON.stringify([]),
-    day:JSON.stringify([]),
-    notification:JSON.stringify([]),
-    objective:JSON.stringify([]),
-    song:JSON.stringify([]),
-    todaytask:JSON.stringify([]),
-    widgettask:JSON.stringify([]),
-}).then((x:any) => {
-
-  cookies().set('token',`${x.id}`)
-  return 'Succes'
-
-});
+  try {
+    await User.create({
+      firstname:data.firstname,
+      lastname:data.lastname,
+      email:data.email,
+      password:data.password,
+      activities:JSON.stringify([]),
+      dailytask:JSON.stringify([]),
+      dashboardwidget:JSON.stringify([]),
+      day:JSON.stringify([]),
+      notification:JSON.stringify([]),
+      objective:JSON.stringify([]),
+      song:JSON.stringify([]),
+      todaytask:JSON.stringify([]),
+      widgettask:JSON.stringify([]),
+    }).then((x:any) => {
+  
+      cookies().set('token',`${x.id}`)
+      return { status:202,error:``,message:`Register succesfull` }
+  
+    });
+  } catch (error) {
+    return { status:505,error:`${error}`,message:`` }
+  }
 
 
 }
@@ -155,9 +159,9 @@ async function loginAction(data:FormData2){
     let user = x[0]
     if(x.length>0){
       cookies().set('token',`${user.id}`)
-      tmp = { status:200,error:`Succes` }
+      tmp = { status:200,error:``,message:`Succesfull login` }
     }else{
-      tmp = { status:300,error:`Not user find` }
+      tmp = { status:300,error:`Not user find`,message:`` }
     }
   })
 
@@ -168,9 +172,4 @@ async function loginAction(data:FormData2){
 
 }
 
-const envoyerFormulaire = async (data: FormData) => {
-  // Effectuez vos opérations ici, par exemple, envoyez les données au serveur
-  console.log('Envoi du formulaire:', data);
-};
-
-export { create,createTodo,deleteTodo,envoyerFormulaire,registerAction,loginAction }
+export { create,createTodo,deleteTodo,registerAction,loginAction }

@@ -1,12 +1,14 @@
+"use client"
+
 import styles from './styles.module.scss'
 import Image from 'next/image'
 import Link from 'next/link'
 
 import { useState,useEffect } from 'react'
 
-import logo from '../../public/logo.png'
+export default function Index({user}) {
 
-export default function Index({}) {
+    let navHeight = 70
 
     const [clientWindowHeight, setClientWindowHeight] = useState(0);
     const [navScrollState, setNavScrollState] = useState("default"); // default - invisible
@@ -21,10 +23,19 @@ export default function Index({}) {
         }
 
         if(scroll>lastScroll){
-            return setNavScrollState('invisible')
+            if(scroll>0&&scroll<navHeight){
+                return setNavScrollState('relative-down')
+            }
+            if(scroll>navHeight-1&&scroll<navHeight+10){
+                return setNavScrollState('invisible')
+            }
+            return setNavScrollState('invisible-down')
         }
 
         if(lastScroll>scroll){
+            if(scroll>0&&scroll<navHeight){
+                return setNavScrollState('relative-up')
+            }
             return setNavScrollState('default')
         }
     };
@@ -37,17 +48,20 @@ export default function Index({}) {
     return (
         <div className={`${styles.nav} ${styles[`nav-${navScrollState}`]}`}>
             <div className={styles.logo}>
-                <Image className={styles.nav__img} src={logo} alt="Hallay logo" />
-                <span>Hallay</span>
+                {/* <Image className={styles.nav__img} src={logo} alt="Hallay logo" /> */}
+                <span>Calendar</span>
             </div>
 
             <div className={styles.link}>
-                <ul>
-                    <li> <span className={styles.select}><Link href={`/`}>Home</Link></span> </li>
-                    <li> <span><Link href={`/projet`}>Projet</Link></span> </li>
-                    <li> <span><Link href={`/team`}>Team</Link></span> </li>
-                    <li> <span><Link href={`/contact`}>Contact</Link></span> </li>
+                <ul className={styles.page}>
+                    {/* <li> <span className={styles.select}><Link href={`/`}>Home</Link></span> </li> */}
+                    <li> <span><Link href={`/`}>Home</Link></span> </li>
+                    <li> <span><Link href={`/login`}>Login</Link></span> </li>
+                    <li> <span><Link href={`/contact`}>Dashboard</Link></span> </li>
                 </ul>
+                <div className={styles.user}>
+                    {user}
+                </div>
             </div>
         </div>
     )

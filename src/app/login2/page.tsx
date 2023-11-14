@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import styles from './main.module.scss'
 import LoginBox from '../../components/login/main-login-box'
 import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
+import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { registerAction,loginAction } from '@/utils/action';
 
@@ -16,7 +18,15 @@ type FormData = {
     confirmPassword:string;
 };
 
+// type Data2 = {
+//     status:number;
+//     error:string;
+//     message:string;
+// }
+
 export default function Home() {
+
+    const router = useRouter()
 
     // Creating the input value using useState
     const [firstName,setFirstName] = useState('')
@@ -31,7 +41,7 @@ export default function Home() {
   
     const onSubmit: SubmitHandler<FormData> = async (data:any) => {
 
-        let data2
+        let data2:any
 
         if(isRegister){
             data2 = await registerAction(data)
@@ -39,9 +49,12 @@ export default function Home() {
             data2 = await loginAction(data)
         }
         
-        // let data2 = await loginRegister(data)
-        console.log(data2);
-        
+        // console.log(data2);
+        if(data2?.status>199&&data2?.status<300){
+            
+            router.push("/")
+            
+        }
     };
 
 
