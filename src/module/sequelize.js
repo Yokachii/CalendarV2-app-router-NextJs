@@ -7,4 +7,4 @@ const sequelize = new Sequelize('yokachi04_tempp', 'yokachi04', 'Elliot2862', {
     dialectModule: require('mysql2'),
 });
 
-module.exports = sequelize;
+export default sequelize

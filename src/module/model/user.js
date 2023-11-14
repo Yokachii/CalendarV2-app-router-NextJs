@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, UUID, UUIDV1, json } = require('sequelize');
-const sequelize = require('../sequelize');
+import sequelize from '../sequelize'
 
 const User = sequelize.define('users', {
     id: {
@@ -72,4 +72,4 @@ const User = sequelize.define('users', {
     console.log('La table "user" a été charger');
 })();
 
-module.exports = User;
+export default User;

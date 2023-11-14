@@ -16,7 +16,7 @@ import { loginRegister } from '../../utils/action'
 //     return {message:'b'}
 // }
 
-export default function Index({firstName,lastName,eMail,password,confirmPassword,setFirstName,setLastName,setEMail,setPassword,setConfirmPassword,handleSubmit,onSubmit,register}) {
+export default function Index({firstName,lastName,eMail,password,confirmPassword,setFirstName,setLastName,setEMail,setPassword,setConfirmPassword,handleSubmit,onSubmit,register,isRegister,setIsRegister}) {
 
     const [loginFormClass, setLoginFormClass] = useState('')
     const [loginTextContentH2, setLoginTextContentH2] = useState('Sign up')
@@ -42,11 +42,13 @@ export default function Index({firstName,lastName,eMail,password,confirmPassword
                 setLoginFormClass('sign-up')
                 setLoginTextContentH2("Sign up")
                 setLoginTextContentSwitch("Allready have an account? Log in.")
+                setIsRegister(true)
                 break;
             case 'Sign up':
                 setLoginFormClass('log-in')
                 setLoginTextContentH2("Log in")
                 setLoginTextContentSwitch("Don’t have an account? Sign up.")
+                setIsRegister(false)
                 break;
         }
     }
@@ -80,7 +82,7 @@ export default function Index({firstName,lastName,eMail,password,confirmPassword
     
             {errors.nom && <p>{errors.nom.message}</p>} */}
     
-            <button type="submit">Envoyer</button>
+            {/* <button type="submit">Envoyer</button> */}
         </form>
     )
   
