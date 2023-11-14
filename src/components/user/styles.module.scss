@@ -1,0 +1,10 @@
+.main{
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    .avatar{
+        height: 60px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+    }
+}

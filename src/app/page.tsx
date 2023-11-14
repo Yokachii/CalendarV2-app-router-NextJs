@@ -48,7 +48,7 @@ export default async function Home({}) {
   return (
     <main className={styles.main} style={{height:"150vh"}}>
       <p>2</p>
-      <p>{userAccountJson.email}</p>
+      <p>{userAccountJson?.email}</p>
       {/* <p>name : {data.user.firstname}</p>
       <p>mail : {data.user.email}</p>
       <p>request state : {data2}</p> */}
