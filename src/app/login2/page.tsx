@@ -5,7 +5,7 @@ import styles from './main.module.scss'
 import LoginBox from '../../components/login/main-login-box'
 import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
 
-import { loginRegister } from '@/utils/action';
+import { registerAction,loginAction } from '@/utils/action';
 
 
 type FormData = {
@@ -24,13 +24,22 @@ export default function Home() {
     const [eMail,setEMail] = useState('')
     const [password,setPassword] = useState('')
     const [confirmPassword,setConfirmPassword] = useState('')
+    const [isRegister,setIsRegister] = useState(false)
 
     const { register, handleSubmit, control } = useForm<FormData>();
     const { errors } = useFormState({ control });
   
     const onSubmit: SubmitHandler<FormData> = async (data:any) => {
+
+        let data2
+
+        if(isRegister){
+            data2 = await registerAction(data)
+        }else{
+            data2 = await loginAction(data)
+        }
         
-        let data2 = await loginRegister(data)
+        // let data2 = await loginRegister(data)
         console.log(data2);
         
     };
@@ -53,7 +62,7 @@ export default function Home() {
             </div>
 
             <div className={`${styles[`right`]}`}>
-                <LoginBox firstName={firstName} lastName={lastName} eMail={eMail} password={password} confirmPassword={confirmPassword} setFirstName={setFirstName} setLastName={setLastName} setEMail={setEMail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} handleSubmit={handleSubmit} onSubmit={onSubmit} register={register}></LoginBox>
+                <LoginBox firstName={firstName} lastName={lastName} eMail={eMail} password={password} confirmPassword={confirmPassword} setFirstName={setFirstName} setLastName={setLastName} setEMail={setEMail} setPassword={setPassword} setConfirmPassword={setConfirmPassword} handleSubmit={handleSubmit} onSubmit={onSubmit} register={register} isRegister={isRegister} setIsRegister={setIsRegister}></LoginBox>
             </div>
 
             

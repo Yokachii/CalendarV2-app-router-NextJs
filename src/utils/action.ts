@@ -5,13 +5,17 @@ import { cookies } from 'next/headers'
 // import sequelize from '../module/sequelize'
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
+import sequelize from '../module/sequelize'
+import User from '../module/model/user'
+import { sql } from '@sequelize/core';
+import { QueryTypes } from 'sequelize'
 
 type FormData2 = {
   firstname:string;
   lastname:string;
   email:string;
   password:string;
-  confirmPassword:string;
+  confirmpassword:string;
 };
  
 async function create() {
@@ -78,13 +82,89 @@ async function deleteTodo(prevState: any, formData: FormData) {
   }
 }
 
-async function loginRegister(data:FormData2){
+// async function loginRegister(data:FormData2){
 
-  if(data.firstname){
-    return 'eheh'
-  }else{
-    return 'ahah'
-  }
+//   if(data.firstname){
+//     return 'eheh'
+//   }else{
+//     return 'ahah'
+//   }
+
+// }
+
+async function checkIfUser(email:string){
+  let sql = `SELECT * FROM users WHERE email = '${email}'`
+
+  let tmp
+
+  await sequelize.query(sql, {type: QueryTypes.SELECT}).then(x=>{
+    console.log(x.length,email,x)
+    if(x.length>0){
+      tmp = true
+    }else{
+      tmp = false
+    }
+  })
+
+  return tmp
+
+}
+
+
+async function registerAction(data:FormData2){
+
+  if(data.password!==data.confirmpassword) return `${data.password} ${data.confirmpassword}`
+
+  let isUser = await checkIfUser(data.email)
+
+  console.log(isUser,data.email)
+
+  if(isUser) return `cette email a déja un compte`
+
+  await User.create({
+    firstname:data.firstname,
+    lastname:data.lastname,
+    email:data.email,
+    password:data.password,
+    activities:JSON.stringify([]),
+    dailytask:JSON.stringify([]),
+    dashboardwidget:JSON.stringify([]),
+    day:JSON.stringify([]),
+    notification:JSON.stringify([]),
+    objective:JSON.stringify([]),
+    song:JSON.stringify([]),
+    todaytask:JSON.stringify([]),
+    widgettask:JSON.stringify([]),
+}).then((x:any) => {
+
+  cookies().set('token',`${x.id}`)
+  return 'Succes'
+
+});
+
+
+}
+
+async function loginAction(data:FormData2){
+
+  let sql = `SELECT * FROM users WHERE email = '${data.email}' AND password = '${data.password}'`
+
+  let tmp
+
+  await sequelize.query(sql, {type: QueryTypes.SELECT}).then((x:any)=>{
+    let user = x[0]
+    if(x.length>0){
+      cookies().set('token',`${user.id}`)
+      tmp = { status:200,error:`Succes` }
+    }else{
+      tmp = { status:300,error:`Not user find` }
+    }
+  })
+
+  return tmp
+  
+  // cookies().set('name','login'+data.email)
+  // return 'login func'
 
 }
 
@@ -93,4 +173,4 @@ const envoyerFormulaire = async (data: FormData) => {
   console.log('Envoi du formulaire:', data);
 };
 
-export { create,createTodo,deleteTodo,loginRegister,envoyerFormulaire }
+export { create,createTodo,deleteTodo,envoyerFormulaire,registerAction,loginAction }
