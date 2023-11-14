@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@sequelize/core": "^7.0.0-alpha.29",
+    "@types/react-modal": "^3.16.3",
     "@vercel/postgres": "^0.5.1",
     "cookie": "^0.6.0",
     "cookies-next": "^4.0.0",
@@ -21,6 +24,7 @@
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
+    "react-modal": "^3.16.1",
     "sass": "^1.69.5",
     "sequelize": "^6.34.0",
     "zod": "^3.22.4"
