@@ -60,7 +60,7 @@ type Widgettask = {
     graphStatDisplay:Array<string>;
 }
 
-type User = {
+export type User = {
     id:string;
     firstname:string;
     lastname:string;

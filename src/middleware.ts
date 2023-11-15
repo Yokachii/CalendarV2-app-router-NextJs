@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
+// import User from '@/module/model/user'
+import sequelize from '@/module/sequelize'
+// import { Sequelize } from 'sequelize'
+import { sql } from '@sequelize/core';
+// import type { User } from './utils/type'
+import { QueryTypes } from 'sequelize'
  
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
@@ -23,7 +29,52 @@ export async function middleware(request: NextRequest) {
   if(status>=200&&status<300){
     const json = await res.json();
 
-    response.headers.set('user-account', JSON.stringify(json.user));
+
+
+    let date = new Date()
+    let dates = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    if(`${month}`.length<2) month=`0${month}`
+    let strDate=`${dates}-${month}-${year}`
+
+
+
+    if(json.day&&json.day[strDate]){
+      response.headers.set('user-account', JSON.stringify(json.user));
+    }else{
+
+      let day = json.day
+
+      let dailyTask = json.dailytask
+      
+      let todayTime:any = {}
+
+      for(let key in dailyTask){
+        let tmpObj:any = {}
+
+        for(let key2 in dailyTask[key]){
+          tmpObj[key2] = '0'
+        }
+
+        todayTime[key] = tmpObj
+        
+      }
+
+      day[strDate] = {
+        time:todayTime,
+        todayNote:{},
+        objective:dailyTask,
+      }
+
+      let sqlStr = `UPDATE users SET day = ${day} WHERE id=${json.id}`
+    
+      await sequelize.query(sqlStr, {type:QueryTypes.SELECT}).then(x=>{
+        response.headers.set('user-account', JSON.stringify(x));
+      })
+
+    }
+
   }else{
     response.headers.set('user-account', '');
   }
