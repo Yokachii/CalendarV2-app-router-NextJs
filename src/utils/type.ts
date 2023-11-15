@@ -5,9 +5,6 @@ type Activities = {
     subTaskList:object;
 }
 
-type Todaytask = {
-
-}
 
 type Dashboardwidget = {
     type:string;
@@ -27,6 +24,42 @@ type Day = {
     objective:Record<string,string>;
 }
 
+type Notif = {
+    title:string;
+    description:string;
+    link:string;
+}
+
+type Objective = {
+    type:string;
+    amount:string;
+    category:Array<string>;
+}
+
+type dailytask = Record<string,string>;
+
+type song = {
+    title:string;
+    artist:string;
+    url:string;
+    cover:string;
+}
+
+type Todaytask = {
+    displayName:string;
+    type:string;
+    icon:string;
+    after:string;
+}
+
+type Widgettask = {
+    type:string;
+    name:string;
+    description:string;
+    areaX:number;
+    graphStatDisplay:Array<string>;
+}
+
 type User = {
     id:string;
     firstname:string;
@@ -34,12 +67,12 @@ type User = {
     email:string;
     password:string;
     activities:Record<string,Activities>;
-    dailytask:Record<string,string>;
-    dashboardwidget:Record<string,Dashboardwidget>;
-    day:Record;
-    notification:string;
-    objective:string;
-    song:string;
-    todaytask:string;
-    widgettask:string;
+    dailytask:Record<string,dailytask>;
+    dashboardwidget:Array<Dashboardwidget>;
+    day:Record<string,Day>;
+    notification:Array<Notif>;
+    objective:Record<string,Objective>;
+    song:Array<song>;
+    todaytask:Record<string,Todaytask>;
+    widgettask:Array<Widgettask>;
 }
