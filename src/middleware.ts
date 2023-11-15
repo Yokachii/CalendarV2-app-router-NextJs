@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
-// import User from '@/module/model/user'
-import sequelize from '@/module/sequelize'
-// import { Sequelize } from 'sequelize'
+// import * as crypto from 'node:crypto'
+const crypto = import('node:crypto');
+import sequelize from '@/module/sequelizecore'
 import { sql } from '@sequelize/core';
-// import type { User } from './utils/type'
-import { QueryTypes } from 'sequelize'
+import { QueryTypes } from 'sequelize';
  
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
