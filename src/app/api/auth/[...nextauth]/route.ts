@@ -1,18 +1,19 @@
-// import NextAuth from 'next-auth';
-// import CredentialsProvider from 'next-auth/providers/credentials';
-// import User from '@/module/model/user';
-// import db from '@/utils/db';
-// import { isPasswordValid } from '@/utils/hash';
-// // import x from '@/module/model/user'
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import User from '@/module/model/user';
+import db from '@/utils/db';
+import { isPasswordValid } from '@/utils/hash';
+import { NextRequest } from 'next/server';
+// import x from '@/module/model/user'
 
-// // export async function POST(request) {
+// export async function POST(request) {
 // export default NextAuth({pages: {},providers: [
 //     CredentialsProvider({
 //       id: 'credentials',
 //       name: 'Credentials',
 //       //@ts-ignore
 //       async authorize(credentials: any) {
-//         await db.connect();
+//         // await db.connect();
 
 //         const user = await User.findOne({ email: credentials.email });
 
@@ -39,9 +40,12 @@
 //     }),
 // ],
 
-//   secret: process.env.SECRET,
+//   secret: process.env.NEXTAUTH_SECRET,
 //   session: {
 //     strategy: 'jwt',
 //     maxAge: 30 * 24 * 60 * 60, // 30 Days
 //   },
 // });
+export default function POST(request:NextRequest){
+
+}
