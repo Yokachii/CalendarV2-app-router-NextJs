@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Modal from 'react-modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faBell, faCalendarMinus, faCheck, faClock, faCross, faFaceAngry, faMoon, faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useRef,useState } from 'react'
+import { useEffect, useRef,useState } from 'react'
 import type { User } from '@/utils/type';
 
 export default function Index({user}) {
@@ -41,12 +41,24 @@ export default function Index({user}) {
         let year = date.getFullYear();
         if(`${month}`.length<2) month=`0${month}`
         let strDate=`${dates}-${month}-${year}`
-        let todayObject = userAccountJson.day[strDate]
+        let todayObject = JSON.parse(userAccountJson.day)[strDate]
     
         return todayObject
     }
 
+    function getTodayDate(){
+        let date = new Date()
+        let dates = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        if(`${month}`.length<2) month=`0${month}`
+        let strDate=`${dates}-${month}-${year}`
+
+        return strDate
+    }
+
     const openModalWithValue = (name:string) => {
+        console.log(isEditModalOpen)
         setEditFieldName(name)
         setIsEditModalOpen(true)
     }
@@ -64,11 +76,10 @@ export default function Index({user}) {
         return res
     }
 
-    const saveNewValue = (name:string) => {
-        console.log(name)
+    const saveNewValue = async (name:string) => {
         // return
         if(!input.current) return
-        // console.log(input.current)
+        if(!input.current.value) return
         // return
         let value = input.current.value
         if(`${value}`.length<1) {
@@ -76,6 +87,55 @@ export default function Index({user}) {
         }else{
             setIsEditModalOpen(false)
             //Save
+
+            // let userTodayTask = JSON.parse(userAccountJson.todaytask)
+            let today = getTodayUse()
+            let todayCopy = {}
+            let dayCopy = {}
+
+
+            Object.assign(dayCopy,JSON.parse(userAccountJson.day))
+            Object.assign(todayCopy,today)
+
+
+            if(today&&today.todayNote&&today.todayNote[name]){
+                // todayCopy.todayNote[name].value = input.current.value
+
+                todayCopy.todayNote[name]={
+                    value:input.current.value,
+                }
+
+                dayCopy[getTodayDate()]=todayCopy
+                
+                const res = await fetch("http://localhost:3000/api/sqlrequest", {
+                    method: "POST",
+                    body: JSON.stringify({sqlRequest:`UPDATE users SET day = '${JSON.stringify(dayCopy)}' WHERE id="${userAccountJson.id}"`}),
+                });
+    
+                let json = await res.json()
+
+            }else if(today&&today.todayNote&&!today.todayNote[name]){
+
+                todayCopy.todayNote[name]={
+                    value:input.current.value,
+                }
+
+                dayCopy[getTodayDate()]=todayCopy
+
+                const res = await fetch("http://localhost:3000/api/sqlrequest", {
+                    method: "POST",
+                    body: JSON.stringify({sqlRequest:`UPDATE users SET day = '${JSON.stringify(dayCopy)}' WHERE id="${userAccountJson.id}"`}),
+                });
+    
+                let json = await res.json()
+                console.log(json)
+                
+            }else{
+
+                console.log('err')
+
+            }
+
         }
     }
 
@@ -104,16 +164,23 @@ export default function Index({user}) {
     
     // console.log()
 
+    useEffect(()=>{
+        // Modal.setAppElement(false)
+        // aria
+        // console.log(input.current)
+    })
+    
+
     return (
-        <>
-            <Modal isOpen={isEditModalOpen} onRequestClose={() => setIsEditModalOpen(false)} style={editModalStyle}>
+        <div className={styles.main}>
+            <Modal isOpen={isEditModalOpen} onRequestClose={() => setIsEditModalOpen(false)} style={editModalStyle} ariaHideApp={false}>
                 <div className={styles.modalContent}>
                     <button className={styles.closeModal} onClick={() => setIsEditModalOpen(false)}><FontAwesomeIcon icon={faXmark} size='2x'></FontAwesomeIcon></button>
                     {
-                        !userAccountJson.todaytask[editFieldName]?`An error as occured on loading`:(
+                        !JSON.parse(userAccountJson.todaytask)[editFieldName]?`An error as occured on loading`:(
                             <div>
-                                <h1>{userAccountJson.todaytask[editFieldName].displayName}</h1>
-                                <span>{userAccountJson.todaytask[editFieldName].after?`The value has to be specified in ${userAccountJson.todaytask[editFieldName].after}`:``}</span>
+                                <h1>{JSON.parse(userAccountJson.todaytask)[editFieldName].displayName}</h1>
+                                <span>{JSON.parse(userAccountJson.todaytask)[editFieldName].after?`The value has to be specified in ${JSON.parse(userAccountJson.todaytask)[editFieldName].after}`:``}</span>
                                 <input onChange={inputChange} placeholder={`${getPlayholder(editFieldName)}`} className={styles.changeValueInput} ref={input}></input>
                                 <button className={styles.btnSave} onClick={()=>saveNewValue(editFieldName)}>{`Save >`}</button>
                             </div>
@@ -131,14 +198,24 @@ export default function Index({user}) {
                     <div className={styles.fieldName}><div className={styles.icon}><FontAwesomeIcon icon={faCalendarMinus} pull='right'></FontAwesomeIcon></div> Date</div>
                     <div className={styles.fieldValue}>{`${new Date().getDate()}-${`${new Date().getMonth()+1}`.length<2?`0${new Date().getMonth()+1}`:`${new Date().getMonth()+1}`}-${new Date().getFullYear()}`}</div>
                 </div>
-                {Object.keys(userAccountJson.todaytask).map((item,i) =>
+                {Object.keys(JSON.parse(userAccountJson.todaytask)).map((item,i) =>
                     <div className={styles.field} key={i}>
-                        <div className={styles.fieldName}><div className={styles.icon}>{iconObj[userAccountJson.todaytask[item].icon]?<FontAwesomeIcon icon={iconObj[userAccountJson.todaytask[item].icon]} pull='right' style={{marginTop:`.3rem`}}></FontAwesomeIcon>:``}</div>  {userAccountJson.todaytask[item].displayName}</div>
-                        <div className={styles.fieldValue}> <p>{getActuallyName(item)}{userAccountJson.todaytask[item].after}</p> <button onClick={() => openModalWithValue(item)}><FontAwesomeIcon icon={faPen} pull='left'></FontAwesomeIcon></button></div>
+                        {/* <p>{JSON.parse(userAccountJson.todaytask)[item]?.icon}</p> */}
+
+                        {/* {console.log(iconObj[JSON.parse(userAccountJson.todaytask)[item]?.icon])} */}
+
+                        {/* {iconObj[JSON.parse(userAccountJson.todaytask)[item]?.icon]?`a`:`b`} */}
+
+                        <div className={styles.fieldName}><div className={styles.icon}>{iconObj[JSON.parse(userAccountJson.todaytask)[item]?.icon]?<FontAwesomeIcon icon={iconObj[JSON.parse(userAccountJson.todaytask)[item]?.icon]} pull='right' style={{marginTop:`.3rem`}}></FontAwesomeIcon>:`a`}</div>  {JSON.parse(userAccountJson.todaytask)[item]?.displayName}</div>
+                        <div className={styles.fieldValue}> <p>{getActuallyName(item)}{JSON.parse(userAccountJson.todaytask)[item].after}</p> <button onClick={() => openModalWithValue(item)}><FontAwesomeIcon icon={faPen} pull='left'></FontAwesomeIcon></button></div>
+                        
+
+                        {/* <div className={styles.fieldName}><div className={styles.icon}>{iconObj[userAccountJson.todaytask[item]?.icon]?<FontAwesomeIcon icon={iconObj[userAccountJson.todaytask[item]?.icon]} pull='right' style={{marginTop:`.3rem`}}></FontAwesomeIcon>:``}</div>  {userAccountJson.todaytask[item]?.displayName}</div> */}
+                        {/* <div className={styles.fieldValue}> <p>{getActuallyName(item)}{userAccountJson.todaytask[item].after}</p> <button onClick={() => openModalWithValue(item)}><FontAwesomeIcon icon={faPen} pull='left'></FontAwesomeIcon></button></div> */}
                     </div>
                 )}
             </div>
-        </>
+        </div>
     )
   
 }

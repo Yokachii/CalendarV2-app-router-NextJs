@@ -17,7 +17,8 @@ export default function Page({}) {
 
     return (
         <main>
-            <p>{userAccountJson.firstname}</p>
+            <p>{userAccountJson?.firstname}</p>
+            {/* <p>{JSON.stringify()}</p> */}
         </main>
     )
 }

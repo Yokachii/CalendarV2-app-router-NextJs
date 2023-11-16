@@ -1,0 +1,88 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
+    gap: 3rem;
+    width: 100%;
+    height: 100%;
+
+    
+    .todayFieldContainer{
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: 100%;
+
+        .field{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            .fieldName{
+                width: 15vw;
+                font-size: 1.5rem;
+                font-weight: 300;
+                color: #F5F5F5;
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+
+                .icon{
+                    width: 2.5rem;
+                }
+            }
+
+            .fieldValue{
+                font-size: 1.5rem;
+                font-weight: 300;
+                color: var(--gray-200);
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+            }
+            
+        }
+
+    }
+
+    .modalContent{
+        width: 100%;
+        height: 100%;
+        background-color: var(--navy-500);
+        padding: 2rem;
+        width: 50vw;
+        height: 30vh;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .closeModal{
+            position: absolute;
+            top:1rem;
+            left:1rem;
+        }
+
+        .btnSave{
+            background-color: #1B2C48;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+            color: var(--gray-400);
+            width: 300px;
+            height: 50px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .changeValueInput{
+            margin: 0 auto;
+            background-color: #6d7d99;
+            border: solid 1px #1B2C48;
+        }
+
+        .changeValueInput::placeholder{
+            color: var(#F5F5F5);
+        }
+    }
+}

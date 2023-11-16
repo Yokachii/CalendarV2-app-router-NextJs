@@ -2,8 +2,10 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 // import * as crypto from 'node:crypto'
-const crypto = import('node:crypto');
-import sequelize from '@/module/sequelizecore'
+// const crypto = import('node:crypto');
+// import sequelize from '@/module/sequelizecore'
+import User from './module/model/user';
+import sequelize from './module/sequelize';
 import { sql } from '@sequelize/core';
 import { QueryTypes } from 'sequelize';
  
@@ -27,6 +29,8 @@ export async function middleware(request: NextRequest) {
   
   if(status>=200&&status<300){
     const json = await res.json();
+    let user = json.user
+    let userDay = JSON.parse(user.day)
 
 
 
@@ -39,13 +43,17 @@ export async function middleware(request: NextRequest) {
 
 
 
-    if(json.day&&json.day[strDate]){
-      response.headers.set('user-account', JSON.stringify(json.user));
+    if(userDay&&userDay[strDate]){
+      response.headers.set('user-account', JSON.stringify(user));
     }else{
 
-      let day = json.day
+      // console.log(user,userDay)
 
-      let dailyTask = json.dailytask
+      let day = {}
+
+      Object.assign(day,userDay)
+
+      let dailyTask = JSON.parse(user.dailytask)
       
       let todayTime:any = {}
 
@@ -60,17 +68,57 @@ export async function middleware(request: NextRequest) {
         
       }
 
-      day[strDate] = {
+      let key = strDate
+      let value = {
         time:todayTime,
         todayNote:{},
         objective:dailyTask,
       }
 
-      let sqlStr = `UPDATE users SET day = ${day} WHERE id=${json.id}`
+      day[key]=value
+      
+      // let obj = {}
+
+      // obj[key]=value
+
+      // day.push(obj)
+
+      // console.log(day,JSON.stringify(day))
+
+      // console.log(day)
+
+      const res = await fetch("http://localhost:3000/api/sqlrequest", {
+        method: "POST",
+        body: JSON.stringify({sqlRequest:`UPDATE users SET day = '${JSON.stringify(day)}' WHERE id="${user.id}"`}),
+      });
+
+      let json = await res.json()
+      
+      return NextResponse.redirect(new URL(request.nextUrl.pathname, request.url))
+
+      // response.headers.set('user-account', JSON.stringify(json?.user));
+
+      // User.find({ where: { id: user.id } }).on('success', function (project) {
+        
+      // })
+
+      // User.find({ where: { id: user.id } })
+      // .on('success', function (user:any) {
+      //   // Check if record exists in db
+      //   if (user) {
+      //     user.update({
+      //       day:day,
+      //     })
+      //     .success(function () {})
+      //   }
+      // })
+
+      // let sqlStr = `UPDATE users SET day = ${day} WHERE id=${user.id}`
     
-      await sequelize.query(sqlStr, {type:QueryTypes.SELECT}).then(x=>{
-        response.headers.set('user-account', JSON.stringify(x));
-      })
+      // await sequelize.query(sqlStr, {type:QueryTypes.SELECT})
+      // .then(x=>{
+      //   response.headers.set('user-account', JSON.stringify(x));
+      // })
 
     }
 

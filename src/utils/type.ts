@@ -60,19 +60,36 @@ type Widgettask = {
     graphStatDisplay:Array<string>;
 }
 
+// export type User = {
+//     id:string;
+//     firstname:string;
+//     lastname:string;
+//     email:string;
+//     password:string;
+//     activities:Record<string,Activities>;
+//     dailytask:Record<string,dailytask>;
+//     dashboardwidget:Array<Dashboardwidget>;
+//     day:Record<string,Day>;
+//     notification:Array<Notif>;
+//     objective:Record<string,Objective>;
+//     song:Array<song>;
+//     todaytask:Record<string,Todaytask>;
+//     widgettask:Array<Widgettask>;
+// }
+
 export type User = {
     id:string;
     firstname:string;
     lastname:string;
     email:string;
     password:string;
-    activities:Record<string,Activities>;
-    dailytask:Record<string,dailytask>;
-    dashboardwidget:Array<Dashboardwidget>;
-    day:Record<string,Day>;
-    notification:Array<Notif>;
-    objective:Record<string,Objective>;
-    song:Array<song>;
-    todaytask:Record<string,Todaytask>;
-    widgettask:Array<Widgettask>;
+    activities:string;
+    dailytask:string;
+    dashboardwidget:string;
+    day:string;
+    notification:string;
+    objective:string;
+    song:string;
+    todaytask:string;
+    widgettask:string;
 }
