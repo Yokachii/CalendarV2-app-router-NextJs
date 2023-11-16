@@ -9,6 +9,7 @@ import '../style/global.css'
 import Nav from '@/components/navbar/index'
 import UserInfo from '@/components/user/userinfo'
 import { headers } from 'next/headers'
+import NextAuthSessionProvider from "@/provider/SessionProvider";
 
 export default function RootLayout({children,}: {children: React.ReactNode}) {
 
@@ -30,7 +31,7 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
 
         <div style={{height:'70px'}}></div>
 
-        {children}
+        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
       </body>
     </html>
   )
