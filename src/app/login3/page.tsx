@@ -1,9 +1,11 @@
 "use client"
 
+import { FormEvent } from 'react';
 import styles from './main.module.scss'
-import { getSession } from 'next-auth/react';
-import type { GetServerSidePropsContext, NextPage } from 'next';
-import { useSession } from "next-auth/react";
+// import { SignIn,SignOut } from 'next-auth'
+import {signIn,signOut,useSession} from 'next-auth/react'
+import Form from './form';
+import Form2 from './form2'
 
 //@ts-ignore
 // export async function getServerSideProps(
@@ -25,13 +27,31 @@ import { useSession } from "next-auth/react";
 //     };
 // };
 
-export default function Home() {
-    
+function Auth(){
     const { data: session } = useSession();
 
+    if(session){
+        return (
+            <div>
+                A
+            </div>
+        )
+    }else{
+        return (
+            <div>
+                B
+            </div>
+        )
+    }
+}
+
+export default function Home() {
+    
     return (
-        <div className={`${styles[`login-app`]}`}>
-           <p>Salut</p> 
+        <div>
+            <Form></Form>
+            <Form2></Form2>
+            {Auth()}
         </div>
     )
 }

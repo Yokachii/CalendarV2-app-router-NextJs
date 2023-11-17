@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
   // response.cookies.set('token', '83834e41-d99e-4ae2-bbac-6f7e7e8e8d98')
   // cookie = response.cookies.get('token')?.value
   
-  const res = await fetch("http://localhost:3000/api/auth", {
+  const res = await fetch("http://localhost:3000/api/auth2", {
     method: "POST",
     body: JSON.stringify({token}),
   });

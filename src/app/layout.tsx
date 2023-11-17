@@ -10,8 +10,9 @@ import Nav from '@/components/navbar/index'
 import UserInfo from '@/components/user/userinfo'
 import { headers } from 'next/headers'
 import NextAuthSessionProvider from "@/provider/SessionProvider";
+import {getServerSession} from 'next-auth'
 
-export default function RootLayout({children,}: {children: React.ReactNode}) {
+export default async function RootLayout({children,}: {children: React.ReactNode}) {
 
   const headersList = headers()
   const userAcc = headersList.get('user-account')
@@ -21,17 +22,33 @@ export default function RootLayout({children,}: {children: React.ReactNode}) {
     userAccountJson=JSON.parse(userAcc)
   }
 
+  const session = await getServerSession();
+
   let user = (
     <UserInfo user={userAccountJson}></UserInfo>
   )
   return (
     <html lang="en">
       <body style={{backgroundColor:'gray'}}>
-        <Nav user={user}></Nav>
 
-        <div style={{height:'70px'}}></div>
+        <NextAuthSessionProvider>
 
-        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+          <Nav user={user}></Nav>
+
+          <div style={{height:'70px'}}></div>
+          <div>
+            {!session &&
+            <span>Login</span>
+            }
+
+            {!!session &&
+            <span>Logout</span>
+            }
+          </div>
+
+          {children}
+
+        </NextAuthSessionProvider>
       </body>
     </html>
   )
