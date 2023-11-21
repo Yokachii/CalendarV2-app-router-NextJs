@@ -14,6 +14,7 @@ export default function Form2() {
             password: formData.get('password'),
             redirect: false,
         })
+        if (response?.error) { console.log(response?.error); }
         console.log(response)
         // Signin
         // const response = await fetch(`http://localhost:3000/api/auth/login`,{

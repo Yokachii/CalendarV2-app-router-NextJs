@@ -72,27 +72,31 @@ const handler = NextAuth({
             },
             async authorize(credentials:any, req:any) {
               //
+              try {
+                let sql = `SELECT * FROM users WHERE email = '${credentials?.email}'`
+                
+                await sequelize.query(sql, {type:QueryTypes.SELECT}).then(async x=>{
+                  
+                  const user:any = x[0];
+                  
+                  const passwordIsCorrect = await compare(credentials?.password||'',user?.password)
+                  
+                  if(passwordIsCorrect){
+                    console.log('Password correct')
+                    return user
+                  }
+                  
+                  // console.log(user.password)
+                  // console.log(passwordIsCorrect)
+                  
+                })
+                
+                console.log({credentials})
+                return null;
+              } catch (err) {
+                throw new Error('Next Auth - Authorize: Authentication error');
+              } 
               
-              let sql = `SELECT * FROM users WHERE email = '${credentials?.email}'`
-              
-              await sequelize.query(sql, {type:QueryTypes.SELECT}).then(async x=>{
-                
-                const user:any = x[0];
-                
-                const passwordIsCorrect = await compare(credentials?.password||'',user?.password)
-                
-                if(passwordIsCorrect){
-                  console.log('Password correct')
-                  return user
-                }
-                
-                // console.log(user.password)
-                // console.log(passwordIsCorrect)
-                
-              })
-              
-              console.log({credentials})
-              return null;
             }
           })
         ],
@@ -101,6 +105,7 @@ const handler = NextAuth({
           maxAge: 30 * 24 * 60 * 60, // 30 days
           updateAge: 24 * 60 * 60, // 24 hours
         },
+        secret: process.env.SECRET,
 })
 
-export {handler as GET, handler as POST}
+export { handler as GET, handler as POST }
