@@ -4,8 +4,8 @@ import { cookies } from 'next/headers'
 // import * as crypto from 'node:crypto'
 // const crypto = import('node:crypto');
 // import sequelize from '@/module/sequelizecore'
-import User from './module/model/user';
-import sequelize from './module/sequelize';
+import User from './module2/model/user';
+import sequelize from './module2/sequelize';
 import { sql } from '@sequelize/core';
 import { QueryTypes } from 'sequelize';
  

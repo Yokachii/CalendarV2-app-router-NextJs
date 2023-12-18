@@ -1,8 +1,8 @@
 'use server';
 
 import { NextApiRequest, NextApiResponse } from 'next'
-import User from '../../../module/model/user'
-import sequelize from '../../../module/sequelize'
+import User from '../../../module2/model/user'
+import sequelize from '../../../module2/sequelize'
 import { Sequelize } from 'sequelize'
 import { sql } from '@sequelize/core';
 import { NextResponse } from "next/server";

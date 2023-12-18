@@ -5,8 +5,8 @@ import { cookies } from 'next/headers'
 // import sequelize from '../module/sequelize'
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
-import sequelize from '../module/sequelize'
-import User from '../module/model/user'
+import sequelize from '../module2/sequelize'
+import User from '../module2/model/user'
 import { sql } from '@sequelize/core';
 import { QueryTypes } from 'sequelize'
 
